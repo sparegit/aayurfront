@@ -10,6 +10,8 @@ import store from './redux/store';
 import {loadUser} from './actions/userActions'
 import {useEffect} from 'react'
 import Cart from './Components/Cart';
+import SingleMed from './Components/SingleMed';
+import OrderDetail from './Components/OrderDetail';
 let email
 if(localStorage.getItem('email')){
   email=localStorage.getItem('email')
@@ -29,6 +31,8 @@ function App() {
       <Route exact path='/register' component={Register}/>
       <Route exact path='/order' component={Order}/>
       <Route exact path='/cart' component={Cart}/>
+      <Route exact path='/orderdetails' component={OrderDetail}/>
+      <Route exact path='/medicine/:medicineId' component={SingleMed}/>
       {/* <AuthRoute exact path='/login' component={Login}/>
       <AuthRoute exact path='/register' component={Register}/> */}
       </Router>

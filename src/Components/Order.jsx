@@ -1,20 +1,29 @@
 import React from "react";
 import {useState,useEffect} from 'react'
 import { MDBContainer, MDBInput } from "mdbreact";
-
+import {  useHistory } from "react-router";
+import axios from "axios";
 import { Form, Row, Col, Button } from "react-bootstrap";
 
 
 function Order() {
- 
+  const history= useHistory();
+  const  [totalcost,setTotalCost]= useState('')
+  const setTotal= async()=>{
+    const res= await axios.get(`http://localhost:8080/gettotal/cart/${encodeURI(localStorage.getItem('userId'))}`) 
+    setTotalCost(res.data);
+   }
+   useEffect(() => {
+    
+     setTotal();
+   }, [])
 
-    const [orderDetails, setOrderDetails] = useState({
-        customerId:localStorage.getItem('userId'),
-       
-        payment:{},
-       Address:{},
-        errors:{}
-      });
+    // const [orderDetails, setOrderDetails] = useState({
+    //     customerId:localStorage.getItem('userId'),
+
+    //    Address:{},
+    //     errors:{}
+    //   });
       const[address, setAddress]= useState({
         location:"",
         city:"",
@@ -30,8 +39,16 @@ function Order() {
       // });
 const handleSubmit=(e)=>{
 e.preventDefault();
-
-console.log(orderDetails);
+const res = axios.post(`http://localhost:8080/order/${encodeURI(localStorage.getItem('userId'))}/`,address)
+.then(res=>{
+  if(res.data.status==="Placed"){
+    history.push("/orderDetails");
+  }
+  console.log(res)
+}).catch(err=>{
+  console.log(err);
+})
+console.log(res);
 }
 
 
@@ -66,8 +83,8 @@ console.log(orderDetails);
           </Form.Group>
         </Row>
       
-       
-        <Button variant="primary" type="submit">
+       <h4>total cost for your order Rs.{totalcost}</h4>
+        <Button  variant="primary" type="submit">
           Submit
         </Button>
       </Form>

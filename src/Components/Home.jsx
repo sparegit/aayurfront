@@ -1,11 +1,12 @@
 import React from "react";
-import { Card, Container, Row, Button, Col } from "react-bootstrap";
+
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { setProducts } from "../actions/product_Actions";
 import { setCart } from "../actions/shopping_actions";
 import { connect } from "react-redux";
 import { addToCart } from "../actions/shopping_actions";
+import MedicineComponent from './MedicineComponent'
 const { useEffect } = React;
 
 const axios = require("axios");
@@ -49,33 +50,7 @@ function Home({ addToCart }) {
   console.log(products);
 
   return (
-    <Container>
-      <Row xs={1} md={3} className="g-4">
-        {products.length &&
-          products.map((med) => (
-            <Col key={med.medicineId}>
-              <Card>
-                <Card.Body>
-                  {" "}
-                  <Card.Title>
-                    <Link
-                      to="/medicinedescription"
-                      style={{ textDecoration: "none" }}
-                    >
-                      {med.medicineName}
-                    </Link>
-                  </Card.Title>
-                  <Card.Text>Rs.{med.medicineCost}</Card.Text>
-                  <Card.Text>{med.medicineDescription}</Card.Text>
-                  <Button onClick={()=> {addToCart(med.medicineId,id);getCartItems()}} variant="primary">
-                    AddToCart
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-      </Row>
-    </Container>
+   <MedicineComponent props={products}/>
   );
 }
 const mapStateToProps = (state) => {
