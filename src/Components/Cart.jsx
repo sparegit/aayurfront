@@ -34,7 +34,7 @@ const [cart,setCarti]= useState([]);
      setTotal();
    }, [])
   
-   if (cartItems) {
+   if (cart.length!==0) {
       return (
         <Container>
         <Row xs={1} md={3} className="g-4">

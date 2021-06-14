@@ -7,7 +7,7 @@ import { setCart } from "../actions/shopping_actions";
 import { connect } from "react-redux";
 import { addToCart } from "../actions/shopping_actions";
 import MedicineComponent from './MedicineComponent'
-const { useEffect } = React;
+const { useEffect,useState } = React;
 
 const axios = require("axios");
 let id = localStorage.getItem('userId');

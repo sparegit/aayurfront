@@ -3,11 +3,13 @@ import { connect, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../actions/userActions";
 import {setCart} from "../actions/shopping_actions"
+
 function Navbar({ logoutUser,setCart }) {
 
   const userIsLoggedIn = useSelector((state) => state.user.loggedIn);
-  let user = useSelector((state) => state.user.user);
 
+  let user = useSelector((state) => state.user.user);
+ 
   const handleSubmit = () => {
     let email = user.email;
     logoutUser(email);
@@ -32,6 +34,7 @@ function Navbar({ logoutUser,setCart }) {
               type="search"
               placeholder="Search"
               aria-label="Search"
+            
             />
             <button
               className="btn btn-outline-success my-2 my-sm-0"
