@@ -4,22 +4,38 @@ import {Card, Container, Row,Button, Col} from 'react-bootstrap'
 import {useEffect} from 'react'
 import { Link } from 'react-router-dom';
 import {useSelector,useDispatch} from 'react-redux' 
+import { setCart } from '../actions/shopping_actions';
 
 
 function Cart() {
-    const cartItems = useSelector((state) => state.shop.cart.products);
+  const dispatch = useDispatch();
+    const cartItems = useSelector((state) => state.shop.cart);
 const  [totalcost,setTotalCost]= useState('')
+const [cart,setCarti]= useState([]);
    console.log("cart",cartItems)
    const setTotal= async()=>{
     const res= await axios.get(`http://localhost:8080/gettotal/cart/${encodeURI(localStorage.getItem('userId'))}`) 
     setTotalCost(res.data);
    }
-   useEffect(() => {
+   const getCartItems = async () => {
+    let id = localStorage.getItem('userId');
+    console.log("userid",id)
+    const res = await axios.get(
+      `http://localhost:8080/getproducts/cart/${encodeURI(id)}`
     
+    );
+    setCarti(res.data);
+    console.log("cart res", res);
+
+    dispatch(setCart(res.data));
+  };
+   useEffect(() => {
+    getCartItems();
      setTotal();
    }, [])
-
-    return (
+  
+   if (cartItems) {
+      return (
         <Container>
         <Row xs={1} md={3} className="g-4">
         {cartItems.length &&
@@ -41,6 +57,13 @@ const  [totalcost,setTotalCost]= useState('')
       <Button as={Link} to="/order" >checkout</Button>
     </Container>
     )
-}
+   
+   }
+   return (<h1>
+     your basket is empty
+   </h1>);
+ }
+   
+
 
 export default Cart

@@ -50,7 +50,7 @@ function Home({ addToCart }) {
   console.log(products);
 
   return (
-   <MedicineComponent props={products}/>
+   <MedicineComponent />
   );
 }
 const mapStateToProps = (state) => {

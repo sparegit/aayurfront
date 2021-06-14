@@ -39,7 +39,8 @@ function Order() {
       // });
 const handleSubmit=(e)=>{
 e.preventDefault();
-const res = axios.post(`http://localhost:8080/order/${encodeURI(localStorage.getItem('userId'))}/`,address)
+console.log(address);
+const res = axios.post(`http://localhost:8080/order/${encodeURI(localStorage.getItem('userId'))}`,address)
 .then(res=>{
   if(res.data.status==="Placed"){
     history.push("/orderDetails");
@@ -82,10 +83,11 @@ console.log(res);
                 } />
           </Form.Group>
         </Row>
-      
-       <h4>total cost for your order Rs.{totalcost}</h4>
+        <h6>Shipping fee Rs.{50}</h6>
+
+       <h5>total cost for your order Rs.{totalcost+50}</h5>
         <Button  variant="primary" type="submit">
-          Submit
+          place your Order
         </Button>
       </Form>
       

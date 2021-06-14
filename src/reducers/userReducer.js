@@ -18,6 +18,7 @@ const userReducer = (state = INITIAL_STATE, { type, payload }) => {
       return { ...state, user: null, loggedIn: false, isAdmin: false };
     case actionTypes.USER_LOGOUT:
       localStorage.removeItem("email");
+      localStorage.removeItem("userId")
       return { ...state, user: null, loggedIn: false, isAdmin: false };
     case actionTypes.LOAD_USER:
       localStorage.getItem("email");

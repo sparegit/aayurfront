@@ -43,7 +43,7 @@ function MedicineComponent({addToCart}) {
   };
 
   useEffect(() => {
-    getMedList();
+    getCartItems();
     // getCartItems();
   }, []);
   console.log(products);
@@ -66,8 +66,8 @@ function MedicineComponent({addToCart}) {
                     </Link>
                   </Card.Title>
                   <Card.Text>Rs.{med.medicineCost}</Card.Text>
-                  <Card.Text>{med.medicineDescription}</Card.Text>
-                  <Button onClick={()=> {addToCart(med.medicineId,id);getCartItems()}} variant="primary">
+                  {/* <Card.Text>{med.medicineDescription}</Card.Text> */}
+                  <Button onClick={()=> {addToCart(med.medicineId,id)}} variant="primary">
                     AddToCart
                   </Button>
                 </Card.Body>

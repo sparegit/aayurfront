@@ -21,9 +21,7 @@ export const addToCart = (itemID,custid) => async (dispatch) => {
 export const setCart=(products)=>{
     return{
         type: actionTypes.SET_CART,
-        payload: {
-            products
-        }
+        payload: products
     }
 }
 export const postCartItem = async(funcParamURL) => {

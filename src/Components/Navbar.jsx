@@ -2,8 +2,9 @@ import React from "react";
 import { connect, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../actions/userActions";
+import {setCart} from "../actions/shopping_actions"
+function Navbar({ logoutUser,setCart }) {
 
-function Navbar({ logoutUser }) {
   const userIsLoggedIn = useSelector((state) => state.user.loggedIn);
   let user = useSelector((state) => state.user.user);
 
@@ -89,4 +90,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { logoutUser })(Navbar);
+export default connect(mapStateToProps, { logoutUser,setCart })(Navbar);
