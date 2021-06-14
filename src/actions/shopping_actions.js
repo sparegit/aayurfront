@@ -1,35 +1,33 @@
-import * as actionTypes  from './shopping_types'
+import * as actionTypes  from '../services/shopping_types'
+import axios from 'axios'
+export const addToCart = (itemID,custid) => async (dispatch) => {
+    try {
+   
+        const url = `http://localhost:8080/shoppingCart/addProduct/${encodeURI(itemID)}/${encodeURI(custid)}`
+        
+        console.log("url of add to cart", url);
+        const res= postCartItem(url);
+        console.log(res);
+        dispatch({
+          type: actionTypes.ADD_TO_CART,
+          payload: res.data,
+        });
+      } catch (err) {
+        dispatch({ type: actionTypes.ADD_TO_CART, payload: err });
+      }
+}
 
-export const addToCart =(itemID)=>{
+
+export const setCart=(products)=>{
     return{
-        type: actionTypes.ADD_TO_CART,
-        payload:{
-            id: itemID
+        type: actionTypes.SET_CART,
+        payload: {
+            products
         }
     }
 }
-export const removeFromCart =(itemID)=>{
-    return{
-        type: actionTypes.REMOVE_FROM_CART,
-        payload:{
-            id: itemID
-        }
-    }
-}
-export const adjustQty =(itemID,value)=>{
-    return{
-        type: actionTypes.ADJUST_QTY,
-        payload:{
-            id: itemID,
-            qty: value,
-        }
-    }
-}
-export const loadCurrentItem =(item)=>{
-    return{
-        type: actionTypes.LOAD_CURRENT_ITEM,
-        payload:{
-           item
-        }
-    }
-}
+export const postCartItem = async(funcParamURL) => {
+  console.log(funcParamURL)
+  const res= await axios.post(`${funcParamURL}`);
+   return res;
+ }

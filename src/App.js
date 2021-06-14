@@ -5,9 +5,11 @@ import Navbar from './Components/Navbar';
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import Login from './Components/Login';
 import Register from './Components/Register';
+import Order from './Components/Order'
 import store from './redux/store';
 import {loadUser} from './actions/userActions'
 import {useEffect} from 'react'
+import Cart from './Components/Cart';
 let email
 if(localStorage.getItem('email')){
   email=localStorage.getItem('email')
@@ -15,7 +17,7 @@ if(localStorage.getItem('email')){
 }
 function App() {
   useEffect(() => {
-    // store.dispatch(loadUser(email))
+     store.dispatch(loadUser(email))
     
   }, [])
   return (
@@ -25,6 +27,8 @@ function App() {
       <Route exact path='/' component={Home}/>
       <Route exact path='/login' component={Login}/>
       <Route exact path='/register' component={Register}/>
+      <Route exact path='/order' component={Order}/>
+      <Route exact path='/cart' component={Cart}/>
       {/* <AuthRoute exact path='/login' component={Login}/>
       <AuthRoute exact path='/register' component={Register}/> */}
       </Router>

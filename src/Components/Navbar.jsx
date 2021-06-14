@@ -7,8 +7,6 @@ function Navbar({ logoutUser }) {
   const userIsLoggedIn = useSelector((state) => state.user.loggedIn);
   let user = useSelector((state) => state.user.user);
 
-  // let email =  useSelector((state)=>state.user.user.email)
-
   const handleSubmit = () => {
     let email = user.email;
     logoutUser(email);
@@ -72,8 +70,16 @@ function Navbar({ logoutUser }) {
         >
           logout
         </Link>
+        <Link
+          style={{ display: userIsLoggedIn ? "block" : "none" }}
+          className="nav-link"
+          to="/cart"
+        >
+          cart
+        </Link>
       </div>
     </nav>
+   
   );
 }
 const mapStateToProps = (state) => {

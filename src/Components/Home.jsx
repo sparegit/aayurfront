@@ -1,45 +1,88 @@
-import React from 'react'
-import Card from './Card';
-import {useSelector,useDispatch} from 'react-redux' 
-import { setProducts } from '../actions/product_Actions';
+import React from "react";
+import { Card, Container, Row, Button, Col } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { setProducts } from "../actions/product_Actions";
+import { setCart } from "../actions/shopping_actions";
+import { connect } from "react-redux";
+import { addToCart } from "../actions/shopping_actions";
 const { useEffect } = React;
-const axios = require('axios');
 
+const axios = require("axios");
+let id = localStorage.getItem('userId');
 
+function Home({ addToCart }) {
+  const products = useSelector((state) => state.product.products);
 
+  const dispatch = useDispatch();
 
-function Home() {
-   const products = useSelector((state)=>state.product.products)
-   const dispatch = useDispatch();
-   
+  const getCartItems = async () => {
+    let id = localStorage.getItem('userId');
+    console.log("userid",id)
+    const res = await axios.get(
+      `http://localhost:8080/getproducts/cart/${encodeURI(id)}`
+    );
+    console.log("cart res", res);
 
-const getMedList = async()=>{
-  const {data} = await axios.get("http://localhost:8080/medicine/")
+    dispatch(setCart(res.data));
+  };
+  const handleAdd = (medid) => {
+    if (medid === null) {
+      alert("login");
+    } else {
+      console.log("med",medid)
+      addToCart(medid,id);
+      getCartItems();
+    }
+  };
 
-  dispatch(setProducts(data));
-}
+  const getMedList = async () => {
+    const { data } = await axios.get("http://localhost:8080/medicine/");
+
+    dispatch(setProducts(data));
+  };
 
   useEffect(() => {
     getMedList();
-  },[]);
+    // getCartItems();
+  }, []);
   console.log(products);
-  
+
   return (
-    <div className="container-md d-flex justify-content-lg-evenly justify-content-center " >
-      {products.length &&
-        products.map((med) => (
-          <div className="row" key={med.medicineId} >
-            <div className="col-sm-4">
-            <Card med={med}></Card>
-            </div>
-          </div>
-        ))
-      }
-
-
-    </div>
-
-  )
+    <Container>
+      <Row xs={1} md={3} className="g-4">
+        {products.length &&
+          products.map((med) => (
+            <Col key={med.medicineId}>
+              <Card>
+                <Card.Body>
+                  {" "}
+                  <Card.Title>
+                    <Link
+                      to="/medicinedescription"
+                      style={{ textDecoration: "none" }}
+                    >
+                      {med.medicineName}
+                    </Link>
+                  </Card.Title>
+                  <Card.Text>Rs.{med.medicineCost}</Card.Text>
+                  <Card.Text>{med.medicineDescription}</Card.Text>
+                  <Button onClick={()=> {addToCart(med.medicineId,id);getCartItems()}} variant="primary">
+                    AddToCart
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+      </Row>
+    </Container>
+  );
 }
+const mapStateToProps = (state) => {
+  return {
+    cart: state.shop.cart,
+  };
+};
 
-export default Home
+
+export default connect(mapStateToProps, { addToCart })(Home);
