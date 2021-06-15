@@ -1,19 +1,33 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { connect, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../actions/userActions";
 import {setCart} from "../actions/shopping_actions"
+import axios from "axios";
 
 function Navbar({ logoutUser,setCart }) {
 
   const userIsLoggedIn = useSelector((state) => state.user.loggedIn);
-
+const[quantity,setQuantity]= useState(0);
   let user = useSelector((state) => state.user.user);
  
   const handleSubmit = () => {
     let email = user.email;
     logoutUser(email);
   };
+
+
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const resp=  axios.get(`http://localhost:8080/getquantity/cart/${localStorage.getItem('userId')}`).then(res=>{
+      setQuantity(res.data)
+      }).catch(err=>{
+        console.log(err);
+      })
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [])
 
   return (
     <nav
@@ -79,7 +93,7 @@ function Navbar({ logoutUser,setCart }) {
           className="nav-link"
           to="/cart"
         >
-          cart
+          cart{quantity}
         </Link>
       </div>
     </nav>

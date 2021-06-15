@@ -73,8 +73,10 @@ console.log(res);
           </Form.Group>
         </Row>
         <h6>Shipping fee Rs.{50}</h6>
+                <h6>payment:cash on delivery</h6>
+       <h5>total cost for your order Rs.{totalcost+50}
+       </h5>
 
-       <h5>total cost for your order Rs.{totalcost+50}</h5>
         <Button  variant="primary" type="submit">
           place your Order
         </Button>

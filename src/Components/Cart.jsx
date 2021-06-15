@@ -33,7 +33,7 @@ const [cart,setCarti]= useState([]);
    useEffect(() => {
     getCartItems();
      setTotal();
-   }, [cart])
+   }, [totalcost])
   
    if (cart.length!==0) {
       return (

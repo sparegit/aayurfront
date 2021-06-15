@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 function OrderAdmin() {
     const isAdmin = useSelector((state) => state.user.isAdmin);
+const [order,setOrder] = useState({
+    orderId:'',
+    dispatchDate:'',
+    status:'',
+    totalCost:''
+})
     if(isAdmin){
         return (
             <div>
@@ -39,8 +45,9 @@ function OrderAdmin() {
                       placeholder="orderDate"
                       name="orderDate"
                       className="form-control"
-                //      value={}
-                //      onChange={}
+                    
+                     onChange={(e) =>
+                        setOrder({ ...order, status: e.target.value })}
                     />
                   </div>
                   <div className="form-group">
@@ -49,8 +56,9 @@ function OrderAdmin() {
                       placeholder="Status"
                       name="Status"
                       className="form-control"
-                 //     value={}
-                 //     onChange={}
+                      value={order.status}
+                      onChange={(e) =>
+                        setOrder({ ...order, status: e.target.value })}
                     />
                   </div>
                   <button

@@ -29,15 +29,15 @@ function MedicineComponent({addToCart}) {
 
     dispatch(setCart(res.data));
   };
-  // const handleAdd = (medid) => {
-  //   if (medid === null) {
-  //     alert("login");
-  //   } else {
-  //     console.log("med",medid)
-  //     addToCart(medid,id);
-  //     getCartItems();
-  //   }
-  // };
+   const handleAdd = (medid) => {
+  if (medid === null) {
+       alert("login");
+     } else {
+      console.log("med",medid)
+       addToCart(medid,id);
+      getCartItems();
+    }
+   };
   console.log(search)
 
 //   const getMedList = async () => {
@@ -48,24 +48,17 @@ function MedicineComponent({addToCart}) {
 
   useEffect(() => {
     getCartItems();
-    products.filter(med=>{
-        if(med.medicineName.toLowerCase().includes(search.toLowerCase())){
-            setFiltered([...filtered,med])
-        }
-    })
+   
     // getCartItems();
-  }, [search]);
+  }, []);
   console.log(products);
     return (
         <div>
-            <div>
-                <input type="text" onChange={e=>setSearch(e.target.value)}>
-                </input>
-            </div>
              <Container>
       <Row xs={1} md={3} className="g-4">
+        
         {products.length &&
-          filtered.map((med) => (
+          products.map((med) => (
             <Col key={med.medicineId}>
               <Card>
                 <Card.Body>
@@ -78,9 +71,10 @@ function MedicineComponent({addToCart}) {
                       {med.medicineName}
                     </Link>
                   </Card.Title>
+                  <img width='18rem' src={med.medicineImage}/>
                   <Card.Text>Rs.{med.medicineCost}</Card.Text>
                   {/* <Card.Text>{med.medicineDescription}</Card.Text> */}
-                  <Button onClick={()=> {addToCart(med.medicineId,id);getCartItems()}} variant="primary">
+                  <Button onClick={()=>handleAdd(med.medicineId) } variant="primary">
                     AddToCart
                   </Button>
                 </Card.Body>
