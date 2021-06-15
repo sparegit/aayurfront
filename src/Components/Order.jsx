@@ -1,6 +1,5 @@
 import React from "react";
 import {useState,useEffect} from 'react'
-import { MDBContainer, MDBInput } from "mdbreact";
 import {  useHistory } from "react-router";
 import axios from "axios";
 import { Form, Row, Col, Button } from "react-bootstrap";
@@ -18,12 +17,7 @@ function Order() {
      setTotal();
    }, [])
 
-    // const [orderDetails, setOrderDetails] = useState({
-    //     customerId:localStorage.getItem('userId'),
 
-    //    Address:{},
-    //     errors:{}
-    //   });
       const[address, setAddress]= useState({
         location:"",
         city:"",
@@ -31,12 +25,7 @@ function Order() {
       })
     
 
-      // const [credentials, setCredentials] = useState({
-      //   email:"",
-      //   password:"",
-      //   mobileNumber:"",
-      //   errors:{}
-      // });
+     
 const handleSubmit=(e)=>{
 e.preventDefault();
 console.log(address);

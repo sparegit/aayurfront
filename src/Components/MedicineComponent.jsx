@@ -29,15 +29,15 @@ function MedicineComponent({addToCart}) {
 
     dispatch(setCart(res.data));
   };
-  const handleAdd = (medid) => {
-    if (medid === null) {
-      alert("login");
-    } else {
-      console.log("med",medid)
-      addToCart(medid,id);
-      getCartItems();
-    }
-  };
+  // const handleAdd = (medid) => {
+  //   if (medid === null) {
+  //     alert("login");
+  //   } else {
+  //     console.log("med",medid)
+  //     addToCart(medid,id);
+  //     getCartItems();
+  //   }
+  // };
   console.log(search)
 
 //   const getMedList = async () => {

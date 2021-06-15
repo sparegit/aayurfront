@@ -39,6 +39,7 @@ function OrderDetail() {
                   <Card.Text>Rs.{order.totalCost}</Card.Text>
                   <Card.Text>Status:{order.status}</Card.Text>
                   <Card.Text>Address:{order.location}</Card.Text>
+                  <Card.Text>PaymentType:{order.paymentType}</Card.Text>
                 
                 </Card.Body>
               </Card>

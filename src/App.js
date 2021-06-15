@@ -12,6 +12,8 @@ import {useEffect} from 'react'
 import Cart from './Components/Cart';
 import SingleMed from './Components/SingleMed';
 import OrderDetail from './Components/OrderDetail';
+import OrderAdmin from './Components/OrderAdmin';
+import AdminViewOrders from './Components/AdminViewOrders';
 let email
 if(localStorage.getItem('email')){
   email=localStorage.getItem('email')
@@ -33,8 +35,8 @@ function App() {
       <Route exact path='/cart' component={Cart}/>
       <Route exact path='/orderdetails' component={OrderDetail}/>
       <Route exact path='/medicine/:medicineId' component={SingleMed}/>
-      {/* <AuthRoute exact path='/login' component={Login}/>
-      <AuthRoute exact path='/register' component={Register}/> */}
+      <Route path='/admin/orderadmin' component={OrderAdmin}/>
+      <Route path='/admin/order/view' component={AdminViewOrders}/>
       </Router>
    </>
   );

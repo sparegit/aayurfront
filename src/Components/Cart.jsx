@@ -3,11 +3,12 @@ import axios from 'axios'
 import {Card, Container, Row,Button, Col} from 'react-bootstrap'
 import {useEffect} from 'react'
 import { Link } from 'react-router-dom';
-import {useSelector,useDispatch} from 'react-redux' 
+import {useSelector,useDispatch, connect} from 'react-redux' 
 import { setCart } from '../actions/shopping_actions';
 
+import {removeFromCart} from '../actions/shopping_actions';
 
-function Cart() {
+function Cart({removeFromCart}) {
   const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.shop.cart);
 const  [totalcost,setTotalCost]= useState('')
@@ -32,7 +33,7 @@ const [cart,setCarti]= useState([]);
    useEffect(() => {
     getCartItems();
      setTotal();
-   }, [])
+   }, [cart])
   
    if (cart.length!==0) {
       return (
@@ -47,7 +48,7 @@ const [cart,setCarti]= useState([]);
                     <Card.Title><Link to="/medicinedescription" style={{textDecoration:"none"}}>{med.medicineName}</Link></Card.Title>
                     <Card.Text>Rs.{med.medicineCost}</Card.Text>
                     <Card.Text>qty:{med.medicineQuantity}</Card.Text>
-                  <Button variant="secondary">delete</Button>
+                  <Button onClick={()=>{removeFromCart(med.medicineId,localStorage.getItem('userId'));setTotal()}} variant="secondary">delete</Button>
                 </Card.Body>
               </Card>
             </Col>
@@ -64,6 +65,14 @@ const [cart,setCarti]= useState([]);
    </h1>);
  }
    
+ const mapStateToProps = state => {
+  return {
+    shop: state.shop.cart,
+    loggedIn: state.user.loggedIn
+  }
+}
 
-
-export default Cart
+ export default connect(
+  mapStateToProps,
+  {removeFromCart},
+) (Cart)
