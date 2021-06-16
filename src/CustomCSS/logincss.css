@@ -1,0 +1,12 @@
+.body1 {
+  background-image: url("../Images/med15.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: absolute;
+}
+.home {
+  background-image: url("../Images/med15.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: absolute;
+}

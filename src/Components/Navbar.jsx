@@ -1,23 +1,21 @@
-import React,{useState,useEffect} from "react";
+import React from "react";
 import { connect, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../actions/userActions";
-import {setCart} from "../actions/shopping_actions"
+import { setCart } from "../actions/shopping_actions";
+import { useState,useEffect } from "react";
 import axios from "axios";
 
-function Navbar({ logoutUser,setCart }) {
-
+function Navbar({ logoutUser, setCart }) {
   const userIsLoggedIn = useSelector((state) => state.user.loggedIn);
-const[quantity,setQuantity]= useState(0);
+  const[quantity,setQuantity]= useState(0);
   let user = useSelector((state) => state.user.user);
- 
+
   const handleSubmit = () => {
     let email = user.email;
     logoutUser(email);
   };
-
-
-  
   useEffect(() => {
     const interval = setInterval(() => {
       const resp=  axios.get(`http://localhost:8080/getquantity/cart/${localStorage.getItem('userId')}`).then(res=>{
@@ -25,39 +23,26 @@ const[quantity,setQuantity]= useState(0);
       }).catch(err=>{
         console.log(err);
       })
-    }, 1000);
+    },);
     return () => clearInterval(interval);
   }, [])
-
   return (
     <nav
-      style={{ alignItems: "center" }}
-      className="navbar navbar-navbar-expand-xxl navbar-light bg-light"
+      //className="navbar navbar-light" style="background-color: #e3f2fd;"
+      // style={{ alignItems: "center", }}
+      className="navbar navbar-navbar-expand-xxl"
+      //style={{backgroundColor:"lightseagreen"}}
+      //style={{ backgroundColor: "lightyellow" }}
+      //style={{backgroundColor:"HighlightText"}}
+      style={{backgroundColor:"cornsilk"}}
     >
       <div style={{ display: "flex", alignItems: "center" }}>
         <Link className="navbar-brand">
-          <h2>Ayurveda</h2>
+          <h2>AyurDaily.com</h2>
         </Link>
         <Link className="nav-link" to="/">
-          <h3>Home</h3>
+          <h3>Medicine</h3>
         </Link>
-        <form className="form-inline my-2 my-lg-0 ">
-          <div className="container-md d-flex">
-            <input
-              className="form-control"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            
-            />
-            <button
-              className="btn btn-outline-success my-2 my-sm-0"
-              type="submit"
-            >
-              Search
-            </button>
-          </div>
-        </form>
       </div>
       <div style={{ display: "flex" }}>
         <Link
@@ -65,14 +50,14 @@ const[quantity,setQuantity]= useState(0);
           className="nav-link"
           to="/login"
         >
-          <h4>login</h4>
+          <h4>Login</h4>
         </Link>
         <Link
           style={{ display: userIsLoggedIn ? "none" : "block" }}
           className="nav-link"
           to="/register"
         >
-          <h4>register</h4>
+          <h4>Register</h4>
         </Link>
         <Link
           style={{ display: userIsLoggedIn ? "none" : "block" }}
@@ -86,18 +71,21 @@ const[quantity,setQuantity]= useState(0);
           className="nav-link"
           to="/"
         >
-          logout
+          Logout
         </Link>
         <Link
           style={{ display: userIsLoggedIn ? "block" : "none" }}
           className="nav-link"
           to="/cart"
         >
-          cart{quantity}
+         <i class="fas fa-shopping-cart">
+                  <sup>
+                    <span class="badge badge-success"style={{color:"black"}}>{quantity}</span>
+                  </sup>
+                </i>
         </Link>
       </div>
     </nav>
-   
   );
 }
 const mapStateToProps = (state) => {
@@ -107,4 +95,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { logoutUser,setCart })(Navbar);
+export default connect(mapStateToProps, { logoutUser, setCart })(Navbar);

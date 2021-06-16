@@ -1,13 +1,21 @@
+import axios from 'axios';
 import React, { useState } from 'react'
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 function OrderAdmin() {
     const isAdmin = useSelector((state) => state.user.isAdmin);
 const [order,setOrder] = useState({
     orderId:'',
-    dispatchDate:'',
     status:'',
-    totalCost:''
 })
+const handleSubmit=()=>{
+const res=  axios.patch(`http://localhost:8080/order/update/${order.orderId}`,order).then(res=>{
+    console.log(res)
+  }).catch(err=>{
+    console.error(err)
+  })
+  console.log(order)
+  console.log(res)
+}
     if(isAdmin){
         return (
             <div>
@@ -25,29 +33,8 @@ const [order,setOrder] = useState({
                       placeholder="orderNo"
                       name="orderNo"
                       className="form-control"
-              //        value={}
-             //         onChange={}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Total Amount:</label>
-                    <input
-                      placeholder="totalAmount"
-                      name="totalAmount"
-                      className="form-control"
-                //      value={}
-                //      onChange={}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Order Date:</label>
-                    <input
-                      placeholder="orderDate"
-                      name="orderDate"
-                      className="form-control"
-                    
                      onChange={(e) =>
-                        setOrder({ ...order, status: e.target.value })}
+                      setOrder({ ...order, orderId: e.target.value })}
                     />
                   </div>
                   <div className="form-group">
@@ -63,16 +50,9 @@ const [order,setOrder] = useState({
                   </div>
                   <button
                     className="btn btn-success"
-                //    onClick={}
+                    onClick={handleSubmit}
                   >
                     Save
-                  </button>
-                  <button
-                    className="btn btn-danger"
-                 //   onClick={}
-                    style={{ marginLeft: "10px" }}
-                  >
-                    Cancel
                   </button>
                 </form>
               </div>

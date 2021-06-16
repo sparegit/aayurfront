@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import {Link,useHistory} from 'react-router-dom'
+import {Card } from 'react-bootstrap'
 import {connect} from 'react-redux'
 import {registerUser,logoutUser, loginUser} from '../actions/userActions'
 const { useState } = React;
@@ -30,9 +31,15 @@ function Register({registerUser, loginUser}) {
   // }
 
   return (
-    <div className="mt-5 ">
+    <div>
+      <div style={{textAlign:"center",marginTop:"20px"}}>
+        <h1 style={{fontWeight:"bold"}}>Register Here..</h1>
+      </div>
+    <Card style={{width:"50rem",height:"400px", margin:"auto",marginTop:"20px",border:"1px solid"}}>
+    <div className="mt-5 " style={{fontWeight:"bold",fontSize:"20px",marginTop:"5px"}}>
       <form onSubmit={submitHandler} style={{ width: "480px", margin: "auto" }}>
         <div>
+          <div>
           <label className="mt-2 mb-2" for="firstname" class="form-label">
             {" "}
             Name
@@ -43,9 +50,11 @@ function Register({registerUser, loginUser}) {
             id="name"
             placeholder="name"
             onChange={(e) => setUser({ ...user, customerName: e.target.value })}
-            value={user.customerName}
+            value={user.customerName} required
           />
+          </div>
         
+        <div style={{marginTop:"5px"}}>
           <label className="mt-2 mb-2" for="mobilenumber" class="form-label">
             {" "}
             Mobile number
@@ -54,11 +63,13 @@ function Register({registerUser, loginUser}) {
             type="text"
             class="form-control"
             id="mobilenumber"
-            placeholder="Mobile"
+            placeholder="mobile"
             onChange={(e) => setUser({ ...user, mobileNumber: e.target.value })}
-            value={user.mobileNumber}
+            value={user.mobileNumber} required 
           />
-          <label for="emailid" className="sr-only">
+          </div>
+          <div style={{marginTop:"5px"}}>
+          <label className="mt-2 mb-2" for="emailid" className="form-label">
             Email
           </label>
           <input
@@ -67,8 +78,9 @@ function Register({registerUser, loginUser}) {
             id="emailid"
             placeholder="email"
             onChange={(e) => setUser({ ...user, email: e.target.value })}
-            value={user.email}
+            value={user.email} required
           />
+          </div>
         </div>
         <div class="mb-3 mt-2">
           <label for="password" class="form-label">
@@ -81,13 +93,15 @@ function Register({registerUser, loginUser}) {
             id="password"
             placeholder="password"
             onChange={(e) => setUser({ ...user, customerPassword: e.target.value })}
-            value={user.customerPassword}
+            value={user.customerPassword} required
           />
         </div>
         <div className="mt-2">
-          <button className="btn btn-primary button-small btn">register</button>
+          <button className="btn btn-success button-small btn">Register</button>
         </div>
       </form>
+    </div>
+    </Card>
     </div>
   );
 }
